@@ -2,6 +2,8 @@ var sudokuApp = angular.module('sudokuApp', []);
 
 function mainCtrl($scope) {
 
+    $scope.uiState = {};
+
     $scope.solution = [
         [
             [[5, 3, 4], [6, 7, 2], [1, 9, 8]],
@@ -20,7 +22,7 @@ function mainCtrl($scope) {
         ]
     ];
 
-    $scope.problem = [
+    $scope.uiState.problem = [
         [
             [[5, 3, null], [6, null, null], [null, 9, 8]],
             [[null, 7, null], [1, 9, 5], [null, null, null]],
@@ -38,21 +40,55 @@ function mainCtrl($scope) {
         ]
     ];
 
-    $scope.uiState = { activeCell: null };
+    $scope.uiState.activeCell = null;
 
     $scope.lockedCells = [];
 
-    for (var boardRowIdx = 0; boardRowIdx < $scope.problem.length; boardRowIdx++) {
-        for (var boxIdx = 0; boxIdx < $scope.problem[boardRowIdx].length; boxIdx++) {
-            for (var boxRowIdx = 0; boxRowIdx < $scope.problem[boardRowIdx][boxIdx].length; boxRowIdx++) {
-                for (var cellIdx = 0; cellIdx < $scope.problem[boardRowIdx][boxIdx][boxRowIdx].length; cellIdx++) {
-                    if ($scope.problem[boardRowIdx][boxIdx][boxRowIdx][cellIdx]) {
-                        $scope.lockedCells.push([boardRowIdx, boxIdx, boxRowIdx, cellIdx]);
+    $scope.lockCells = function () {
+        for (var boardRowIdx = 0; boardRowIdx < $scope.uiState.problem.length; boardRowIdx++) {
+            var currentBoardRow = $scope.uiState.problem[boardRowIdx];
+            for (var boxIdx = 0; boxIdx < currentBoardRow.length; boxIdx++) {
+                var currentBox = currentBoardRow[boxIdx];
+                for (var boxRowIdx = 0; boxRowIdx < currentBox.length; boxRowIdx++) {
+                    var currentBoxRow = currentBox[boxRowIdx];
+                    for (var cellIdx = 0; cellIdx < currentBoxRow.length; cellIdx++) {
+                        if (currentBoxRow[cellIdx] !== null) {
+                            $scope.lockedCells.push([boardRowIdx, boxIdx, boxRowIdx, cellIdx]);
+                        }
                     }
                 }
             }
         }
-    }
+    };
+
+    $scope.lockCells();
+
+    $scope.boardIsFull = function () {
+        var boardIsFull = true;
+        for (var boardRowIdx = 0; boardRowIdx < $scope.uiState.problem.length; boardRowIdx++) {
+            var currentBoardRow = $scope.uiState.problem[boardRowIdx];
+            for (var boxIdx = 0; boxIdx < currentBoardRow.length; boxIdx++) {
+                var currentBox = currentBoardRow[boxIdx];
+                for (var boxRowIdx = 0; boxRowIdx < currentBox.length; boxRowIdx++) {
+                    var currentBoxRow = currentBox[boxRowIdx];
+                    for (var cellIdx = 0; cellIdx < currentBoxRow.length; cellIdx++) {
+                        if (currentBoxRow[cellIdx] === null) {
+                            boardIsFull = false;
+                        }
+                    }
+                }
+            }
+        }
+        return boardIsFull;
+    };
+
+    $scope.setCellValue = function(val) {
+        var boardRowIdx = $scope.uiState.activeCell[0];
+        var boxIdx = $scope.uiState.activeCell[1];
+        var boxRowIdx = $scope.uiState.activeCell[2];
+        var cellRowIdx = $scope.uiState.activeCell[3];
+        $scope.uiState.problem[boardRowIdx][boxIdx][boxRowIdx][cellRowIdx] = parseInt(val);
+    };
 
     $scope.setActiveCell = function (cellData) {
         var cellIsLocked = false;
@@ -70,4 +106,14 @@ function mainCtrl($scope) {
     $scope.cellIsActive = function (cellData) {
         return angular.equals($scope.uiState.activeCell, cellData);
     };
+
+    $scope.$watch('uiState.problem', function() {
+        if($scope.boardIsFull()) {
+            if (angular.equals($scope.uiState.problem, $scope.solution)) {
+                alert("You solved it!");
+            } else {
+                alert("Sorry, your solution is wrong.");
+            }
+        }
+    }, true);
 }
