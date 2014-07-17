@@ -14,19 +14,20 @@ body {
 }
 
 .cell {
-    width: 35px;
-    height: 35px;
+    padding: 0px;
     text-align: center;
     border: 1px solid gray;
     display: inline-block;
     vertical-align: top;
-    font-size: 30px;
 }
 
 .cell_input {
-    /* border: none; */
-    height: 30px;
-    width: 30px;
+    border: none;
+    height: 33px;
+    width: 33px;
+    font-size: 30px;
+    text-align: center;
+    margin: 0px;
 }
 
 /* menu */

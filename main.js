@@ -87,7 +87,9 @@ function mainCtrl($scope) {
         var boxIdx = $scope.uiState.activeCell[1];
         var boxRowIdx = $scope.uiState.activeCell[2];
         var cellRowIdx = $scope.uiState.activeCell[3];
+        $scope.cancelProblemWatch();
         $scope.uiState.problem[boardRowIdx][boxIdx][boxRowIdx][cellRowIdx] = parseInt(val);
+        $scope.setProblemWatch();
     };
 
     $scope.setActiveCell = function (cellData) {
@@ -107,13 +109,17 @@ function mainCtrl($scope) {
         return angular.equals($scope.uiState.activeCell, cellData);
     };
 
-    $scope.$watch('uiState.problem', function() {
-        if($scope.boardIsFull()) {
-            if (angular.equals($scope.uiState.problem, $scope.solution)) {
-                alert("You solved it!");
-            } else {
-                alert("Sorry, your solution is wrong.");
+    $scope.setProblemWatch = function() {
+        $scope.cancelProblemWatch = $scope.$watch('uiState.problem', function() {
+            if($scope.boardIsFull()) {
+                if (angular.equals($scope.uiState.problem, $scope.solution)) {
+                    alert("You solved it!");
+                } else {
+                    alert("Sorry, your solution is wrong.");
+                }
             }
-        }
-    }, true);
+        }, true);
+    };
+
+    $scope.setProblemWatch();
 }

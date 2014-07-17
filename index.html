@@ -16,11 +16,8 @@
                     <div class="cell"
                          ng-repeat="cell in row track by $index"
                          ng-click="setActiveCell([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])">
-                        <span ng-hide="cellIsActive([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])">
-                            {{cell}}
-                        </span>
-                        <span ng-show="cellIsActive([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])">
-                            <input class="cell_input" type="text" ng-model="cell" ng-change="setCellValue(cell)">
+                        <span>
+                            <input ng-disabled="!cellIsActive([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])" class="cell_input" type="text" ng-model="cell" ng-change="setCellValue(cell)">
                         </span>
                     </div>
                 </div>
