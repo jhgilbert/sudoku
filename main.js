@@ -3,6 +3,7 @@ var sudokuApp = angular.module('sudokuApp', []);
 function mainCtrl($scope) {
 
     $scope.uiState = {};
+    $scope.uiState.highlightWrongAnswers = false;
 
     $scope.solution = [
         [
@@ -92,16 +93,52 @@ function mainCtrl($scope) {
         $scope.setProblemWatch();
     };
 
-    $scope.setActiveCell = function (cellData) {
+    $scope.helpPlayerOut = function(val) {
+        var answerProvided = false;
+        for (var boardRowIdx = 0; boardRowIdx < $scope.uiState.problem.length; boardRowIdx++) {
+            if (answerProvided) { break; }
+            var currentBoardRow = $scope.uiState.problem[boardRowIdx];
+            for (var boxIdx = 0; boxIdx < currentBoardRow.length; boxIdx++) {
+                var currentBox = currentBoardRow[boxIdx];
+                for (var boxRowIdx = 0; boxRowIdx < currentBox.length; boxRowIdx++) {
+                    var currentBoxRow = currentBox[boxRowIdx];
+                    for (var cellIdx = 0; cellIdx < currentBoxRow.length; cellIdx++) {
+                        if (currentBoxRow[cellIdx] === null && !answerProvided) {
+                            currentBoxRow[cellIdx] = $scope.solution[boardRowIdx][boxIdx][boxRowIdx][cellIdx];
+                            answerProvided = true;
+                        }
+                    }
+                }
+            }
+        }
+    };
+
+    $scope.highlightError = function (cellIdentifier) {
+        if (!$scope.uiState.highlightErrors) {
+            return false;
+        }
+        var boardRowIdx = cellIdentifier[0];
+        var boxIdx = cellIdentifier[1];
+        var boxRowIdx = cellIdentifier[2];
+        var cellRowIdx = cellIdentifier[3];
+        var cellValue = $scope.uiState.problem[boardRowIdx][boxIdx][boxRowIdx][cellRowIdx];
+        if (cellValue === null) {
+            return false;
+        }
+        cellValue = parseInt(cellValue);
+        return !angular.equals(cellValue, $scope.solution[boardRowIdx][boxIdx][boxRowIdx][cellRowIdx]);
+    };
+
+    $scope.setActiveCell = function (cellIdentifier) {
         var cellIsLocked = false;
         for (var i = 0; i < $scope.lockedCells.length; i++) {
-            if (angular.equals($scope.lockedCells[i], cellData)) {
+            if (angular.equals($scope.lockedCells[i], cellIdentifier)) {
                 cellIsLocked = true;
             }
             if (cellIsLocked) { break;}
         }
         if (!cellIsLocked) {
-            $scope.uiState.activeCell = cellData;
+            $scope.uiState.activeCell = cellIdentifier;
         }
     };
 

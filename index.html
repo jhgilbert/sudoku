@@ -17,13 +17,17 @@
                          ng-repeat="cell in row track by $index"
                          ng-click="setActiveCell([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])">
                         <span>
-                            <input ng-disabled="!cellIsActive([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])" class="cell_input" type="text" ng-model="cell" ng-change="setCellValue(cell)">
+                            <input ng-class="{wrong_answer: highlightError([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])}"
+                                   ng-disabled="!cellIsActive([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])"
+                                   class="cell_input" type="text" ng-model="cell" ng-change="setCellValue(cell)">
                         </span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <input type="checkbox" ng-model="uiState.highlightErrors">Highlight wrong answers
+    <button ng-click="helpPlayerOut()">I need a little help!</button>
 </div>
 </body>
  
