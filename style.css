@@ -1,0 +1,20 @@
+/* board */
+
+.box {
+    border: 2px solid black;
+    border-collapse: collapse;
+    vertical-align: top;
+    display: inline-block;
+    width: 111px;
+    height: 111px;
+}
+
+.cell {
+    width: 35px;
+    height: 35px;
+    border: 1px solid gray;
+    display: inline-block;
+    vertical-align: top;
+}
+
+/* menu */

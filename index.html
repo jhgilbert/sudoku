@@ -4,11 +4,20 @@
 	<title>Sudoku</title>
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 		<script type="text/javascript" src="main.js"></script>
+        <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
  
 <body>
 <div ng-controller="mainCtrl">
-    {{test}}
+    <div class="board">
+        <div class="problem_row" ng-repeat="row in problem">
+            <div class="box" ng-repeat="box in row">
+                <div class="cell_row" ng-repeat="row in box track by $index">
+                    <div class="cell" ng-repeat="cell in row track by $index">{{cell}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 </body>
  
