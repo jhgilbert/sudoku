@@ -1,8 +1,12 @@
+body {
+    font-family: Helvetica, sans-serif;
+}
+
 /* board */
 
 .box {
     border: 2px solid black;
-    border-collapse: collapse;
+    border-collapse: collapse !important;
     vertical-align: top;
     display: inline-block;
     width: 111px;
@@ -12,9 +16,17 @@
 .cell {
     width: 35px;
     height: 35px;
+    text-align: center;
     border: 1px solid gray;
     display: inline-block;
     vertical-align: top;
+    font-size: 30px;
+}
+
+.cell_input {
+    /* border: none; */
+    height: 30px;
+    width: 30px;
 }
 
 /* menu */
