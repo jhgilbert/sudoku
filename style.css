@@ -100,14 +100,6 @@ body {
 
 /* menu */
 
-#menu {
-    background-color: white;
-    width: 95%;
-    margin: auto;
-    min-width: 259px;
-    border-radius: 6px;
-}
-
 .button {
     margin-top: 10px;
     margin-bottom: 5px;
