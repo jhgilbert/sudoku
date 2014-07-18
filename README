@@ -10,6 +10,8 @@ TRADEOFFS
 
 My CSS isn’t semantic. This was mainly to save time, versus envisoning a broader “game world” in which the board pieces might be reusable in other contexts and applications. In a production environment, CSS is ideally reusable in conceptual units like “alert” or “menu”.
 
+Similarly, the files aren't organized into a folder structure that indicates an expectation of project growth.
+
 IF I HAD MORE TIME …
 
 I’ve been spoiled by Foundation — I haven’t written my own responsive CSS in a long time! Some of it is pretty rough. I’d be interested in building a resizable grid more along the lines of best practices.
