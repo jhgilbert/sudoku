@@ -1,32 +1,3 @@
-// set size of numbers when the board is resized
-
-var cellHeight = null;
-
-function resizeNumbers() {
-    var height = $('.cell_input').first().height();
-    if (height == cellHeight) {
-        return;
-    }
-    cellHeight = height;
-    var newNumberSize;
-    if (height > 35) {
-        newNumberSize = height/1.8;
-        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
-    } else {
-        newNumberSize = height/1.5;
-        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
-    }
-}
-
-$(window).resize(function () {
-    resizeNumbers();
-});
-
-$(document).ready(function () {
-    resizeNumbers();
-    $('.cell_input').show();
-});
-
 var sudokuApp = angular.module('sudokuApp', []);
 
 function mainCtrl($scope, $window) {
@@ -49,9 +20,6 @@ function mainCtrl($scope, $window) {
             [5, 3, 7, 4, 1, 9, 2, 8, 6],
             [2, 8, 4, 6, 3, 5, 1, 7, 9]
         ];
-
-
-
 
         // copy of the solution, but with values missing
         $scope.uiState.problem = [
@@ -202,3 +170,34 @@ function mainCtrl($scope, $window) {
     };
 
 }
+
+// set size of numbers when the board is resized
+
+var cellHeight = null;
+
+function resizeNumbers() {
+    var height = $('.cell_input').first().height();
+    if (height == cellHeight) {
+        return;
+    }
+    cellHeight = height;
+    var newNumberSize;
+    if (height > 35) {
+        newNumberSize = height/1.8;
+        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
+    } else {
+        newNumberSize = height/1.5;
+        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
+    }
+}
+
+$(window).resize(function () {
+    resizeNumbers();
+});
+
+$(document).ready(function () {
+    setTimeout(function() {
+        resizeNumbers();
+        $('.cell_input').show();
+    }, 300);
+});

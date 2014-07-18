@@ -8,6 +8,10 @@ TOOLS USED
 
 TRADEOFFS
 
+The board’s cells became elongated, rather than square, in my efforts to create a fully responsive grid. I kept the full responsiveness instead of going back to square cells, but squares would be much more pleasing visually, and I’d chase down a solution before putting this into production. Plus, I’m cutting it pretty close in terms of fitting everything above the fold.
+
+Similarly, I used an ugly hack to set the size of the numbers. Using a timeout to run resizeNumbers() definitely gives me a “yuck” feeling, but without the timeout, the resize function occasionally runs too early, especially in Safari, resulting in weird tiny numbers about 1 out of 10 times. I liked the dynamic number sizes enough to put up with the hack.
+
 My CSS isn’t semantic. This was mainly to save time, versus envisoning a broader “game world” in which the board pieces might be reusable in other contexts and applications. In a production environment, CSS is ideally reusable in conceptual units like “alert” or “menu”.
 
 Similarly, the files aren't organized into a folder structure that indicates an expectation of project growth.
