@@ -1,0 +1,19 @@
+TOOLS USED
+
+- jQuery, for some simple responsive text resizing. Other methods of resizing (like CSS3’s vw) aren’t Android-friendly.
+
+- Angular, because it frees the game logic from the DOM. I enjoy simply worrying about building the game data, rather than how it will look in the HTML or wrapping game logic up with IDs and classes.
+
+- A few fonts from Google Fonts.
+
+TRADEOFFS
+
+My CSS isn’t semantic. This was mainly to save time, versus envisoning a broader “game world” in which the board pieces might be reusable in other contexts and applications. In a production environment, CSS is ideally reusable in conceptual units like “alert” or “menu”.
+
+IF I HAD MORE TIME …
+
+I’ve been spoiled by Foundation — I haven’t written my own responsive CSS in a long time! Some of it is pretty rough. I’d be interested in building a resizable grid more along the lines of best practices.
+
+I’d also build a board generator, obviously, or the application would have rather limited use.
+
+The “game restart” is just a reload of the entire page, which is pretty chintzy. I’d build in an actual restart function, or at least include Angular routing so I could reload the route instead of the entire page.
