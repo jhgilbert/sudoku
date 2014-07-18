@@ -10,19 +10,15 @@
 <body>
 <div ng-controller="mainCtrl">
     <div class="board">
-        <div class="problem_row" ng-repeat="row in uiState.problem">
-            <div class="box" ng-repeat="box in row">
-                <div class="cell_row" ng-repeat="row in box track by $index">
-                    <div class="cell"
-                         ng-repeat="cell in row track by $index"
-                         ng-click="setActiveCell([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])">
+        <div class="box" ng-repeat="box in uiState.problem">
+            <div class="cell"
+                 ng-repeat="cell in box track by $index"
+                 ng-click="setActiveCell([$parent.$index, $index])">
                         <span>
-                            <input ng-class="{wrong_answer: highlightError([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])}"
-                                   ng-disabled="!cellIsActive([$parent.$parent.$parent.$index, $parent.$parent.$index, $parent.$index, $index])"
+                            <input ng-class="{wrong_answer: highlightError([$parent.$index, $index])}"
+                                   ng-disabled="cellIsLocked([$parent.$index, $index])"
                                    class="cell_input" type="text" ng-model="cell" ng-change="setCellValue(cell)">
                         </span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
