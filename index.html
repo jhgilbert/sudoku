@@ -1,17 +1,19 @@
 <!DOCTYPE html>
 <html ng-app="sudokuApp">
 <head>
-	<title>Sudoku</title>
-        <link href='http://fonts.googleapis.com/css?family=Cedarville+Cursive|Oswald:400,700' rel='stylesheet' type='text/css'>
-        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
-		<script type="text/javascript" src="main.js"></script>
-        <link rel="stylesheet" type="text/css" href="style.css" />
+    <title>Sudoku</title>
+    <link href='http://fonts.googleapis.com/css?family=Cedarville+Cursive|Oswald:400,700' rel='stylesheet' type='text/css'>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
- 
+
 <body>
 <div ng-controller="mainCtrl">
     <div id="mast">Sudoku</div>
+
+    <!-- board -->
     <div id="board">
         <div class="box" ng-repeat="box in uiState.problem">
             <div class="cell_container"
@@ -23,16 +25,24 @@
                     <input ng-disabled="cellIsLocked([$parent.$index, $index])"
                            class="cell_input" type="text" ng-model="cell" ng-change="setCellValue(cell)">
                 </div>
-
             </div>
         </div>
     </div>
-            <div id="mistake_highlighter" class="button" ng-click="toggleErrorHighlighting()">
-                <span ng-show="!uiState.highlightErrors">highlight&nbsp;mistakes</span>
-                <span ng-show="uiState.highlightErrors" class="ng-hide">turn&nbsp;off&nbsp;highlight</span>
-            </div>
-            <div id="player_helper" class="button" ng-click="helpPlayerOut()">get&nbsp;hint</div>
+
+    <!--  menu -->
+    <div id="mistake_highlighter" class="button" ng-click="toggleErrorHighlighting()">
+        <span ng-show="!uiState.highlightErrors">highlight&nbsp;mistakes</span>
+        <span ng-show="uiState.highlightErrors" class="ng-hide">turn&nbsp;off&nbsp;highlight</span>
+    </div>
+    <div id="player_helper" class="button" ng-click="helpPlayerOut()">get&nbsp;hint</div>
+
+    <!-- results overlay -->
+    <div class="ng-hide" ng-show="gameOutcome" id="overlay">
+        <div class="alert" ng-bind="gameOutcome"></div>
+        <div class="button medium" ng-click="restartGame();">Restart</div>
+    </div>
+
 </div>
 </body>
- 
+
 </html>

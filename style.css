@@ -1,11 +1,61 @@
 body {
-    font-family: Helvetica, sans-serif;
+    font-family: 'Cedarville Cursive', sans-serif;
     background-image: url("images/damask.jpg");
     max-width: 475px;
     margin: 25px auto;
 }
 
-/* board */
+#mast {
+    color: #FFF;
+    text-align: center;
+    font-size: 40px;
+}
+
+/* simple modal */
+
+#overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    background-image: url("images/CBCBCB-0.9.png");
+}
+
+.alert {
+    margin-top: 15%;
+    font-size: 50px;
+    font-size: 15vw;
+    color: #c5277d;
+    font-family: 'Oswald', sans-serif;
+    font-weight: 400;
+    text-align: center;
+}
+
+/* responsive spacing */
+
+.square_spacer {
+    width: 100%;
+    position: relative;
+    top: 0px;
+    left: 0px;
+    margin: 0px;
+}
+
+.image_container {
+    position: relative;
+    top: 0px;
+}
+
+.cell_container {
+    width: 31%;
+    margin: 0px;
+    border: 1px solid black;
+    border-collapse: collapse;
+    display: inline-block;
+    position: relative;
+    background-color: white;
+}
 
 #board {
     width: 100%;
@@ -21,23 +71,7 @@ body {
     margin-right: -1px;
 }
 
-.square_spacer {
-    width: 100%;
-    position: relative;
-    top: 0px;
-    left: 0px;
-    margin: 0px;
-}
-
-.cell_container {
-    width: 31%;
-    margin: 0px;
-    border: 1px solid black;
-    border-collapse: collapse;
-    display: inline-block;
-    position: relative;
-    background-color: white;
-}
+/* cell input */
 
 .input_container {
     position: absolute;
@@ -45,11 +79,6 @@ body {
     height: 100%;
     top: 0px;
     left: 0px;
-}
-
-.image_container {
-    position: relative;
-    top: 0px;
 }
 
 .cell_input {
@@ -67,13 +96,6 @@ body {
 
 .wrong_answer {
     background-color: #c5277d;
-}
-
-#mast {
-    color: #FFF;
-    text-align: center;
-    font-family: 'Cedarville Cursive', sans-serif;
-    font-size: 40px;
 }
 
 /* menu */
@@ -94,9 +116,13 @@ body {
     border-radius: 10px;
     padding: 3px 10px;
     cursor: pointer;
-    font-family: 'Cedarville Cursive', sans-serif;
     font-size: 30px;
     text-align: center;
+}
+
+.button.medium {
+    max-width: 120px;
+    margin: auto;
 }
 
 .button:hover {
