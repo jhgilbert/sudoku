@@ -1,3 +1,32 @@
+// set size of numbers when the board is resized
+
+var cellHeight = null;
+
+function resizeNumbers() {
+    var height = $('.cell_input').first().height();
+    if (height == cellHeight) {
+        return;
+    }
+    cellHeight = height;
+    var newNumberSize;
+    if (height > 35) {
+        newNumberSize = height/1.8;
+        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
+    } else {
+        newNumberSize = height/1.5;
+        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
+    }
+}
+
+$(window).resize(function () {
+    resizeNumbers();
+});
+
+$(document).ready(function () {
+    resizeNumbers();
+    $('.cell_input').show();
+});
+
 var sudokuApp = angular.module('sudokuApp', []);
 
 function mainCtrl($scope) {
@@ -95,6 +124,10 @@ function mainCtrl($scope) {
 
     // PLAYER HINTS ====================================================================
 
+    $scope.toggleErrorHighlighting = function () {
+        $scope.uiState.highlightErrors = !$scope.uiState.highlightErrors;
+    };
+
     // Gives the user a cell's value and locks the cell.
     $scope.helpPlayerOut = function () {
         var answerProvided = false;
@@ -152,7 +185,7 @@ function mainCtrl($scope) {
 
     // INITIALIZE ============================================================
 
-    $scope.uiState.highlightWrongAnswers = false;
+    $scope.uiState.highlightErrors = false;
     $scope.uiState.activeCell = null;
 
     $scope.lockedCells = [];

@@ -2,6 +2,8 @@
 <html ng-app="sudokuApp">
 <head>
 	<title>Sudoku</title>
+        <link href='http://fonts.googleapis.com/css?family=Cedarville+Cursive|Oswald:400,700' rel='stylesheet' type='text/css'>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 		<script src="http://ajax.googleapis.com/ajax/libs/angularjs/1.2.12/angular.min.js"></script>
 		<script type="text/javascript" src="main.js"></script>
         <link rel="stylesheet" type="text/css" href="style.css" />
@@ -9,7 +11,7 @@
  
 <body>
 <div ng-controller="mainCtrl">
-    <div id="mast">sudoku</div>
+    <div id="mast">Sudoku</div>
     <div id="board">
         <div class="box" ng-repeat="box in uiState.problem">
             <div class="cell_container"
@@ -25,12 +27,11 @@
             </div>
         </div>
     </div>
-        <div id="answer_highlighter">
-            <input type="checkbox" ng-model="uiState.highlightErrors">Highlight wrong answers
-        </div>
-        <div id="player_helper">
-            <div class="button" ng-click="helpPlayerOut()">I need a little help!</div>
-        </div>
+            <div id="mistake_highlighter" class="button" ng-click="toggleErrorHighlighting()">
+                <span ng-show="!uiState.highlightErrors">highlight mistakes</span>
+                <span ng-show="uiState.highlightErrors" class="ng-hide">turn off highlight</span>
+            </div>
+            <div id="player_helper" class="button" ng-click="helpPlayerOut()">get hint</div>
 </div>
 </body>
  
