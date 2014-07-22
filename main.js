@@ -1,3 +1,134 @@
+// Returns static board, but can be replaced with a true board generator at a later date
+function generateBoard() {
+    return {
+        solution: [
+            [5, 3, 4, 6, 7, 2, 1, 9, 8],
+            [6, 7, 8, 1, 9, 5, 3, 4, 2],
+            [9, 1, 2, 3, 4, 8, 5, 6, 7],
+            [8, 5, 9, 4, 2, 6, 7, 1, 3],
+            [7, 6, 1, 8, 5, 3, 9, 2, 4],
+            [4, 2, 3, 7, 9, 1, 8, 5, 6],
+            [9, 6, 1, 2, 8, 7, 3, 4, 5],
+            [5, 3, 7, 4, 1, 9, 2, 8, 6],
+            [2, 8, 4, 6, 3, 5, 1, 7, 9]
+        ],
+        problem: [
+            [5,    3,    null, 6,    null, null, null, 9,    8],
+            [null, 7,    null, 1,    9,    5,    null, null, null],
+            [null, null, null, null, null, null, null, 6,    null],
+            [8,    null, null, 4,    null, null, 7,    null, null],
+            [null, 6,    null, 8,    null, 3,    null, 2,    null],
+            [null, null, 3,    null, null, 1,    null, null, 6],
+            [null, 6,    null, null, null, null, null, null, null],
+            [null, null, null, 4,    1,    9,    null, 8,    null],
+            [2,    8,    null, null, null, 5,    null, 7,    9]
+        ]
+    };
+}
+
+// Truthfully, I'd likely use JSRender for this ... Angular habits die hard
+function buildCellHTML(boxIdx, cellIdx) {
+}
+
+// populate board
+
+
+
+
+
+
+
+
+
+
+
+var cellHeight = null;
+
+function resizeNumbers() {
+    var height = $('.cell_input').first().height();
+    if (height == cellHeight) {
+        return;
+    }
+    cellHeight = height;
+    var newNumberSize;
+    if (height > 35) {
+        newNumberSize = height / 1.8;
+        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
+    } else {
+        newNumberSize = height / 1.5;
+        $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
+    }
+}
+
+$(window).resize(function () {
+    resizeNumbers();
+});
+
+$(document).ready(function () {
+    $('#results_overlay').hide();
+    var board = generateBoard();
+    var solution = board.solution;
+    var problem = board.problem;
+
+    for (var i=0; i < problem.length; i++) {
+        var currentBox = problem[i];
+        var boxID = "box_" + i;
+        $('#board').hide();
+        $('#board').append("<div id='" + boxID + "' class='box'></div>");
+        for (var n=0; n < currentBox.length; n++ ) {
+            var cellID = "cell_" + i + "_" + n;
+            var inputID = "input_" + i + "_" + n;
+            $('#' + boxID).append("<div id='" + cellID + "'class='cell_container'>" +
+            "    <div class='image_container'><img class='square_spacer' src='images/000000-0.png'/></div>" +
+            "    <div class='input_container'>" +
+            "        <input id='" + inputID + "'class='cell_input' type='text' />" +
+            "    </div>" +
+            "</div>");
+            var inputVal = problem[i][n];
+            if (inputVal) {
+                $('#' + inputID).val(inputVal);
+                $('#' + inputID).prop("disabled", true);
+            } else {
+                $('#' + inputID).addClass("editable");
+            }
+        }
+        $('#board').show();
+        $('#menu').show();
+    }
+
+    function isBoardFull() {
+        var boardIsFull = true;
+        $('.editable').each(function (index) {
+            if ($(this).val() === ""){
+                boardIsFull = false;
+            }
+        });
+
+        return boardIsFull;
+    }
+
+    function showGameResult() {
+    }
+
+    $('.editable').on('change', function () {
+        console.log("Running input change function!");
+        var boardIsFull = isBoardFull();
+        if (boardIsFull) {
+            showGameResult();
+        }
+    });
+
+
+
+    setTimeout(function() {
+        resizeNumbers();
+        $('.cell_input').show();
+    }, 300);
+});
+
+
+/*
+
 var sudokuApp = angular.module('sudokuApp', []);
 
 function mainCtrl($scope, $window) {
@@ -201,3 +332,5 @@ $(document).ready(function () {
         $('.cell_input').show();
     }, 300);
 });
+
+*/

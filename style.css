@@ -12,6 +12,10 @@ body {
     margin-bottom: -3px;
 }
 
+#menu {
+    display: none;
+}
+
 /* simple modal */
 
 #overlay {
@@ -59,6 +63,7 @@ body {
 }
 
 #board {
+    display: none;
     width: 100%;
     min-width: 259px;
     margin-left: 3px;
