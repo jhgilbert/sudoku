@@ -20,7 +20,7 @@ body {
     display: none;
 }
 
-#highlight_cancel_option {
+#highlight_cancel_button {
     display: none;
 }
 
@@ -136,7 +136,7 @@ body {
     background-color: #FFF;
 }
 
-#mistake_highlighter {
+.highlight_toggle {
     float: left;
     width: 55%;
 }

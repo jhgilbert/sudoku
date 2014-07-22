@@ -26,7 +26,7 @@ function generateBoard() {
     };
 }
 
-function buildBoard(problem) {
+function drawBoard() {
     for (var i=0; i < problem.length; i++) {
         var currentBox = problem[i];
         var boxID = "box_" + i;
@@ -61,7 +61,7 @@ function isBoardFull() {
     return boardIsFull;
 }
 
-function getGameResult(solution) {
+function getGameResult() {
     var playerWon = true;
     // did the player win?
     for (var boxIdx=0; boxIdx < solution.length; boxIdx++) {
@@ -76,15 +76,32 @@ function getGameResult(solution) {
     return playerWon;
 }
 
-function showGameResult(problem, solution) {
+function showGameResult() {
     console.log("Trying to show game result ...");
-    var playerWon = getGameResult(solution);
+    var playerWon = getGameResult();
     if (playerWon) {
         $('#game_result').html("You won");
     } else {
         $('#game_result').html("You lost");
     }
     $('#results_overlay').show();
+}
+
+function cancelErrorHighlight() {
+    $('.editable').removeClass('wrong_answer');
+}
+
+function highlightErrors() {
+    cancelErrorHighlight();
+    for (var boxIdx=0; boxIdx < solution.length; boxIdx++) {
+        var currentBox = solution[boxIdx];
+        for (var cellIdx = 0; cellIdx < currentBox.length; cellIdx++) {
+            var inputVal = $('#input_' + boxIdx + "_" + cellIdx).val();
+            if (inputVal !== "" && parseInt(inputVal) !== solution[boxIdx][cellIdx]){
+                $('#input_' + boxIdx + "_" + cellIdx).addClass('wrong_answer');
+            }
+        }
+    }
 }
 
 function initializeBoard() {
@@ -94,12 +111,16 @@ function initializeBoard() {
     var solution = board.solution;
     var problem = board.problem;
 
-    buildBoard(problem);
+    drawBoard();
 
     $('.editable').on('change', function () {
         var boardIsFull = isBoardFull();
         if (boardIsFull) {
             showGameResult(problem, solution);
+        } else {
+            if (errorsAreHighlighted) {
+                highlightErrors();
+            }
         }
     });
 
@@ -133,8 +154,27 @@ function resizeNumbers() {
     }
 }
 
+var errorsAreHighlighted = false;
+var board = generateBoard();
+var solution = board.solution;
+var problem = board.problem;
+
 $(document).ready(function () {
     initializeBoard();
+
+    $('#highlight_init_button').on('click', function () {
+        errorsAreHighlighted = true;
+        highlightErrors();
+        $(this).hide();
+        $('#highlight_cancel_button').show();
+    });
+
+    $('#highlight_cancel_button').on('click', function () {
+        errorsAreHighlighted = false;
+        cancelErrorHighlight();
+        $(this).hide();
+        $('#highlight_init_button').show();
+    });
 
     $('#restart_game').on('click', function () {
         $('#results_overlay').hide();
