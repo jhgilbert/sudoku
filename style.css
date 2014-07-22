@@ -55,11 +55,6 @@ body {
     margin: 0px;
 }
 
-.image_container {
-    position: relative;
-    top: 0px;
-}
-
 .cell_container {
     width: 31%;
     margin: 0px;
@@ -156,7 +151,7 @@ body {
         margin: 0px auto;
     }
 
-    #mistake_highlighter {
+    .highlight_toggle {
         float: none;
         display: block;
         width: 92%;
