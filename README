@@ -2,17 +2,17 @@ TOOLS USED
 
 - jQuery, for some simple responsive text resizing. Other methods of resizing (like CSS3’s vw) aren’t Android-friendly.
 
-- Angular, because it frees the game logic from the DOM. I enjoy simply worrying about building the game data, rather than how it will look in the HTML or wrapping game logic up with IDs and classes.
-
 - A few fonts from Google Fonts.
 
 TRADEOFFS
 
-The board’s cells became elongated, rather than square, in my efforts to create a fully responsive grid. I kept the full responsiveness instead of going back to square cells, but squares would be much more pleasing visually, and I’d chase down a solution before putting this into production. Plus, I’m cutting it pretty close in terms of fitting everything above the fold.
+I rendered the board with JavaScript. This makes the code more opaque, but the alternative is repetitive, brittle HTML that would be a pain to update, should we choose to tweak our approach. I wasn't sure whether using something like JSRender was OK, so I just used plain strings.
+
+The board’s cells became elongated, rather than square, in my efforts to create a fully responsive grid. I kept the full responsiveness instead of going back to square cells, but squares would be much more pleasing visually, and I’d chase down a solution before putting this into production. Plus, I’m cutting it pretty close in terms of fitting everything above the fold -- square cells would fix that.
 
 Similarly, I used an ugly hack to set the size of the numbers. Using a timeout to run resizeNumbers() definitely gives me a “yuck” feeling, but without the timeout, the resize function occasionally runs too early, especially in Safari, resulting in weird tiny numbers about 1 out of 10 times. I liked the dynamic number sizes enough to put up with the hack.
 
-My CSS isn’t semantic. This was mainly to save time, versus envisoning a broader “game world” in which the board pieces might be reusable in other contexts and applications. In a production environment, CSS is ideally reusable in conceptual units like “alert” or “menu”.
+My CSS isn’t semantic. This was mainly to save time, versus envisioning a broader “game world” in which the board pieces might be reusable in other contexts and applications. In a production environment, CSS is ideally reusable in conceptual units like “alert” or “menu”.
 
 Similarly, the files aren't organized into a folder structure that indicates an expectation of project growth.
 
@@ -22,4 +22,3 @@ I’ve been spoiled by Foundation — I haven’t written my own responsive CSS 
 
 I’d also build a board generator, obviously, or the application would have rather limited use.
 
-The “game restart” is just a reload of the entire page, which is pretty chintzy. I’d build in an actual restart function, or at least include Angular routing so I could reload the route instead of the entire page.
