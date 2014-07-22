@@ -5,33 +5,30 @@
     <link rel="stylesheet" type="text/css" href="style.css" />
     <link href='http://fonts.googleapis.com/css?family=Cedarville+Cursive|Oswald:400,700' rel='stylesheet' type='text/css'>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script type="text/javascript" src="main.js"></script>
 </head>
 
 <body>
-<div ng-controller="mainCtrl">
-    <div id="mast">Sudoku</div>
+<div id="mast">Sudoku</div>
 
-    <!-- board -->
-    <div id="board">
-    </div>
-
-    <!--  menu -->
-    <div id="menu">
-        <div id="mistake_highlighter" class="button">
-            <span id="highlight_init_option">highlight&nbsp;mistakes</span>
-            <span id="highlight_cancel_option">turn&nbsp;off&nbsp;highlight</span>
-        </div>
-        <div id="player_helper" class="button">get&nbsp;hint</div>
-    </div>
-
-    <!-- results overlay -->
-    <div id="results_overlay" id="overlay">
-        <div class="alert"></div>
-        <div class="button medium">Restart</div>
-    </div>
-
+<!-- board -->
+<div id="board">
 </div>
-<script type="text/javascript" src="main.js"></script>
-</body>
 
+<!--  menu -->
+<div id="menu">
+    <div id="mistake_highlighter" class="button">
+        <span id="highlight_init_option">highlight&nbsp;mistakes</span>
+        <span id="highlight_cancel_option">turn&nbsp;off&nbsp;highlight</span>
+    </div>
+    <div id="player_helper" class="button">get&nbsp;hint</div>
+</div>
+
+<!-- results overlay -->
+<div id="results_overlay" class="overlay">
+    <div id="game_result" class="alert"></div>
+    <div id="restart_game" class="button medium">Restart</div>
+</div>
+
+</body>
 </html>

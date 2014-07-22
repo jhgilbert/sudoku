@@ -26,31 +26,104 @@ function generateBoard() {
     };
 }
 
-// Truthfully, I'd likely use JSRender for this ... Angular habits die hard
-function buildCellHTML(boxIdx, cellIdx) {
+function buildBoard(problem) {
+    for (var i=0; i < problem.length; i++) {
+        var currentBox = problem[i];
+        var boxID = "box_" + i;
+        $('#board').append("<div id='" + boxID + "' class='box'></div>");
+        for (var n=0; n < currentBox.length; n++ ) {
+            var cellID = "cell_" + i + "_" + n;
+            var inputID = "input_" + i + "_" + n;
+            $('#' + boxID).append("<div id='" + cellID + "'class='cell_container'>" +
+                "    <div class='image_container'><img class='square_spacer' src='images/000000-0.png'/></div>" +
+                "    <div class='input_container'>" +
+                "        <input id='" + inputID + "'class='cell_input' type='text' />" +
+                "    </div>" +
+                "</div>");
+            var inputVal = problem[i][n];
+            if (inputVal) {
+                $('#' + inputID).val(inputVal);
+                $('#' + inputID).prop("disabled", true);
+            } else {
+                $('#' + inputID).addClass("editable");
+            }
+        }
+    }
 }
 
-// populate board
+function isBoardFull() {
+    var boardIsFull = true;
+    $('.editable').each(function (index) {
+        if ($(this).val() === ""){
+            boardIsFull = false;
+        }
+    });
+    return boardIsFull;
+}
 
+function getGameResult(solution) {
+    var playerWon = true;
+    // did the player win?
+    for (var boxIdx=0; boxIdx < solution.length; boxIdx++) {
+        var currentBox = solution[boxIdx];
+        for (var cellIdx = 0; cellIdx < currentBox.length; cellIdx++) {
+            inputVal = parseInt($('#input_' + boxIdx + "_" + cellIdx).val());
+            if (inputVal !== solution[boxIdx][cellIdx]){
+                playerWon = false;
+            }
+        }
+    }
+    return playerWon;
+}
 
+function showGameResult(problem, solution) {
+    console.log("Trying to show game result ...");
+    var playerWon = getGameResult(solution);
+    if (playerWon) {
+        $('#game_result').html("You won");
+    } else {
+        $('#game_result').html("You lost");
+    }
+    $('#results_overlay').show();
+}
 
+function initializeBoard() {
+    $('#board').html("");
+    var board = generateBoard();
 
+    var solution = board.solution;
+    var problem = board.problem;
 
+    buildBoard(problem);
 
+    $('.editable').on('change', function () {
+        var boardIsFull = isBoardFull();
+        if (boardIsFull) {
+            showGameResult(problem, solution);
+        }
+    });
 
+    $('#board').show();
+    $('#menu').show();
 
-
-
+    setTimeout(function() {
+        resizeNumbers();
+        $('.cell_input').show();
+    }, 200);
+}
 
 var cellHeight = null;
 
 function resizeNumbers() {
     var height = $('.cell_input').first().height();
+
     if (height == cellHeight) {
         return;
     }
+
     cellHeight = height;
     var newNumberSize;
+
     if (height > 35) {
         newNumberSize = height / 1.8;
         $('.cell_input').css('font-size', Math.round(newNumberSize * 100) / 100 + 'px');
@@ -60,70 +133,17 @@ function resizeNumbers() {
     }
 }
 
-$(window).resize(function () {
-    resizeNumbers();
-});
-
 $(document).ready(function () {
-    $('#results_overlay').hide();
-    var board = generateBoard();
-    var solution = board.solution;
-    var problem = board.problem;
+    initializeBoard();
 
-    for (var i=0; i < problem.length; i++) {
-        var currentBox = problem[i];
-        var boxID = "box_" + i;
-        $('#board').hide();
-        $('#board').append("<div id='" + boxID + "' class='box'></div>");
-        for (var n=0; n < currentBox.length; n++ ) {
-            var cellID = "cell_" + i + "_" + n;
-            var inputID = "input_" + i + "_" + n;
-            $('#' + boxID).append("<div id='" + cellID + "'class='cell_container'>" +
-            "    <div class='image_container'><img class='square_spacer' src='images/000000-0.png'/></div>" +
-            "    <div class='input_container'>" +
-            "        <input id='" + inputID + "'class='cell_input' type='text' />" +
-            "    </div>" +
-            "</div>");
-            var inputVal = problem[i][n];
-            if (inputVal) {
-                $('#' + inputID).val(inputVal);
-                $('#' + inputID).prop("disabled", true);
-            } else {
-                $('#' + inputID).addClass("editable");
-            }
-        }
-        $('#board').show();
-        $('#menu').show();
-    }
-
-    function isBoardFull() {
-        var boardIsFull = true;
-        $('.editable').each(function (index) {
-            if ($(this).val() === ""){
-                boardIsFull = false;
-            }
-        });
-
-        return boardIsFull;
-    }
-
-    function showGameResult() {
-    }
-
-    $('.editable').on('change', function () {
-        console.log("Running input change function!");
-        var boardIsFull = isBoardFull();
-        if (boardIsFull) {
-            showGameResult();
-        }
+    $('#restart_game').on('click', function () {
+        $('#results_overlay').hide();
+        initializeBoard();
     });
 
-
-
-    setTimeout(function() {
+    $(window).resize(function () {
         resizeNumbers();
-        $('.cell_input').show();
-    }, 300);
+    });
 });
 
 

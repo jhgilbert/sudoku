@@ -16,9 +16,17 @@ body {
     display: none;
 }
 
+#results_overlay {
+    display: none;
+}
+
+#highlight_cancel_option {
+    display: none;
+}
+
 /* simple modal */
 
-#overlay {
+.overlay {
     width: 100%;
     height: 100%;
     position: absolute;
