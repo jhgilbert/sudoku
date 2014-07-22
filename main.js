@@ -104,6 +104,26 @@ function highlightErrors() {
     }
 }
 
+function getHint() {
+    var hintGiven = false;
+    for (var boxIdx=0; boxIdx < solution.length; boxIdx++) {
+        if (hintGiven) { break; }
+        var currentBox = solution[boxIdx];
+        for (var cellIdx = 0; cellIdx < currentBox.length; cellIdx++) {
+            if (hintGiven) { break; }
+            var input = $('#input_' + boxIdx + "_" + cellIdx);
+            var inputVal = input.val();
+            if (inputVal === ""){
+                input.val(solution[boxIdx][cellIdx]);
+                hintGiven = true;
+            }
+        }
+    }
+    if (isBoardFull()) {
+        showGameResult();
+    }
+}
+
 function initializeBoard() {
     $('#board').html("");
     var board = generateBoard();
@@ -174,6 +194,10 @@ $(document).ready(function () {
         cancelErrorHighlight();
         $(this).hide();
         $('#highlight_init_button').show();
+    });
+
+    $('#player_helper').on('click', function () {
+        getHint();
     });
 
     $('#restart_game').on('click', function () {
